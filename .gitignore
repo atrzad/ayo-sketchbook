@@ -1,0 +1,4 @@
+node_modules/
+.env
+deploy/tailscale/.env
+deploy/tailscale/estado/

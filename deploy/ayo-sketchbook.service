@@ -1,0 +1,19 @@
+[Unit]
+Description=Ayo Sketchbook - cofre de notas com caneta (porta 3400, só localhost)
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Projects/ayo-sketchbook
+ExecStart=/usr/sbin/node --env-file=%h/Projects/ayo-sketchbook/.env --disable-warning=ExperimentalWarning server/index.js
+Environment=NODE_ENV=production
+Restart=always
+RestartSec=3
+NoNewPrivileges=yes
+UMask=0077
+MemoryMax=512M
+
+[Install]
+WantedBy=default.target

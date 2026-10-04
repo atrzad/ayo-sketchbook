@@ -1,0 +1,19 @@
+name: ayo-sketchbook-tailscale
+# Segunda "máquina" na rede Tailscale, só para o Ayo Sketchbook: https://ayo-sketchbook.<sua-tailnet>.ts.net
+# Não mexe no tailscaled da máquina nem no Funnel do Nossos Dias (roda em modo userspace, com estado próprio).
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: ayo-sketchbook-tailscale
+    hostname: ayo-sketchbook
+    network_mode: host          # enxerga o site em 127.0.0.1:3400
+    env_file: .env              # TS_AUTHKEY=... (só você edita; nunca vai para o git)
+    environment:
+      - TS_HOSTNAME=ayo-sketchbook
+      - TS_USERSPACE=true
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_SERVE_CONFIG=/config/serve.json
+    volumes:
+      - ./estado:/var/lib/tailscale
+      - ./serve.json:/config/serve.json:ro
+    restart: unless-stopped
